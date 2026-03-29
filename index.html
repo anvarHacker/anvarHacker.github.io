@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>System</title>
+
+<style>
+  body {
+    margin:0;
+    background:black;
+    color:white;
+    font-family:-apple-system, BlinkMacSystemFont, sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    flex-direction:column;
+  }
+
+  .text {
+    font-size:18px;
+    opacity:0.8;
+  }
+
+  .fade {
+    animation: fadeout 2s forwards;
+  }
+
+  @keyframes fadeout {
+    to { opacity:0; }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="text" id="msg">iOS Security Check...</div>
+
+<script>
+setTimeout(() => {
+  document.getElementById("msg").innerText = "Unauthorized access detected...";
+}, 2000);
+
+setTimeout(() => {
+  document.getElementById("msg").innerText = "Shutting down...";
+}, 4000);
+
+setTimeout(() => {
+  document.body.classList.add("fade");
+}, 6000);
+
+setTimeout(() => {
+  document.body.innerHTML = `
+    <h1>😂 GOT YOU</h1>
+    <p>Bu hazil edi</p>
+    <p>“Chala hacker”dan salom 😎</p>
+  `;
+    document.body.style.background="white";
+    document.body.style.color="black";
+}, 8000);
+</script>
+
+</body>
+</html>
