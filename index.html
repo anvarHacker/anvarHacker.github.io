@@ -1,63 +1,100 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>System Access</title>
 
 <style>
-  body {
-    margin:0;
-    background:black;
-    color:white;
-    font-family:-apple-system, BlinkMacSystemFont, sans-serif;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    flex-direction:column;
-  }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: black;
+  color: #00ff00;
+  font-family: monospace;
+  height: 100%;
+}
 
-  .text {
-    font-size:18px;
-    opacity:0.8;
-  }
+.container {
+  padding: 15px;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
 
-  .fade {
-    animation: fadeout 2s forwards;
-  }
+.line {
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #00ff00;
+  animation: blink 1s infinite;
+}
 
-  @keyframes fadeout {
-    to { opacity:0; }
-  }
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+.popup {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #111;
+  border: 1px solid #00ff00;
+  padding: 10px 20px;
+  display: none;
+}
 </style>
 </head>
 
 <body>
 
-<div class="text" id="msg">iOS Security Check...</div>
+<div class="container" id="terminal"></div>
+<div class="popup" id="popup">⚠️ Unauthorized Access Detected</div>
 
 <script>
-setTimeout(() => {
-  document.getElementById("msg").innerText = "Unauthorized access detected...";
-}, 2000);
+const lines = [
+  "Initializing system...",
+  "Bypassing security...",
+  "Accessing iPhone data...",
+  "Downloading contacts...",
+  "Uploading to server...",
+  "Injecting payload...",
+  "WARNING: Device compromised",
+  "Just kidding 😄"
+];
 
-setTimeout(() => {
-  document.getElementById("msg").innerText = "Shutting down...";
-}, 4000);
+let i = 0;
+const terminal = document.getElementById("terminal");
 
-setTimeout(() => {
-  document.body.classList.add("fade");
-}, 6000);
+function typeLine(text, callback) {
+  let index = 0;
+  let div = document.createElement("div");
+  terminal.appendChild(div);
 
-setTimeout(() => {
-  document.body.innerHTML = `
-    <h1>😂 GOT YOU</h1>
-    <p>Bu hazil edi</p>
-    <p>“Chala hacker”dan salom 😎</p>
-  `;
-    document.body.style.background="white";
-    document.body.style.color="black";
-}, 8000);
+  function type() {
+    if (index < text.length) {
+      div.textContent += text.charAt(index);
+      index++;
+      setTimeout(type, 30);
+    } else {
+      if (callback) callback();
+    }
+  }
+  type();
+}
+
+function runLines() {
+  if (i < lines.length) {
+    typeLine(lines[i], () => {
+      i++;
+      if (i === 5) {
+        document.getElementById("popup").style.display = "block";
+      }
+      setTimeout(runLines, 500);
+    });
+  }
+}
+
+runLines();
 </script>
 
 </body>
